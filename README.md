@@ -1,8 +1,8 @@
 # Threat Intelligence Dashboard
-Open-source threat intelligence dashboard using the AlienVault OTX API.
+Open-source threat intelligence dashboard using the LevelBlue OTX API.
 
 ## What does this do?
-It shows you threat intelligence feeds from AlienVault on many types of cyber attacks.
+It shows you threat intelligence feeds from LevelBlue on many types of cyber attacks.
 
 ## What you need to know how to use
 
