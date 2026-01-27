@@ -1,5 +1,4 @@
 import streamlit as st
-# from utils import search_pulses_by_category, categories, create_country_heatmap, search_ioc
 import utils
 import plotly.express as px
 import pandas as pd
@@ -38,19 +37,36 @@ if page == "Threat Feeds":
         st.session_state[f'{selected_category}_df'] = df
         st.success(f"Fetched {len(df)} results", icon="✅")
 
-    # Display data if available
-    if f'{selected_category}_df' in st.session_state and not st.session_state[f'{selected_category}_df'].empty:
-        df = st.session_state[f'{selected_category}_df']
-        st.dataframe(df)
-        if not df.empty:
-            fig = utils.create_country_heatmap(df)
-            if fig:
-                st.plotly_chart(fig, width='stretch')
-            else:
-                st.warning("No country data available in these pulses.")
+    #     if f'{selected_category}_df' in st.session_state and not st.session_state[f'{selected_category}_df'].empty:
+    #         df = st.session_state[f'{selected_category}_df']
+    #         st.dataframe(df)
+            
+    #         if not df.empty:
+    #             fig = utils.create_country_heatmap(df)
+    #             if fig:
+    #                 st.plotly_chart(fig, use_container_width=True)
+    #             else:
+    #                 st.warning("No country data available in these pulses.")
 
-    else:
-        st.info(f"Click 'Refresh {selected_category} Pulses' to load data. No data loaded yet.")
+    # # Call the fragment in your main app
+    # display_threat_data(selected_category)
+
+    @st.fragment(run_every=300)
+    def display_threat_data(selected_category):
+        # Display data if available
+        if f'{selected_category}_df' in st.session_state and not st.session_state[f'{selected_category}_df'].empty:
+            df = st.session_state[f'{selected_category}_df']
+            st.dataframe(df)
+            if not df.empty:
+                fig = utils.create_country_heatmap(df)
+                if fig:
+                    st.plotly_chart(fig, width='stretch')
+                else:
+                    st.warning("No country data available in these pulses.")
+
+        else:
+            st.info(f"Click 'Refresh {selected_category} Pulses' to load data. No data loaded yet.")
+    display_threat_data(selected_category)
 else:
     st.title("🔍 Real-Time IOC Enrichment")
     st.markdown("Query for indicator details.")
@@ -59,7 +75,7 @@ else:
     col1, col2 = st.columns([1, 3])
     with col1:
         # Define indicator types you want to support
-        type_options = utils.ioc_types.keys()
+        type_options = [type.name for type in utils.IndicatorTypes.all_types]
         indicator_type = st.selectbox("Indicator Type", options=type_options)
 
     with col2:

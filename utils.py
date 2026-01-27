@@ -20,17 +20,7 @@ categories_tags = {
     "apt": ["apt"],
     "ics": ["ics", "scada", "ot"]
 }
-ioc_types = {
-    "IPv4": IndicatorTypes.IPv4,
-    "IPv6": IndicatorTypes.IPv6,
-    "Email": IndicatorTypes.EMAIL,
-    "Hostname": IndicatorTypes.HOSTNAME,
-    "Domain": IndicatorTypes.DOMAIN,
-    "URL": IndicatorTypes.URL,
-    "URI": IndicatorTypes.URI,
-    "FileHash-SHA256": IndicatorTypes.FILE_HASH_SHA256,
-    "FileHash-MD5": IndicatorTypes.FILE_HASH_MD5
-}
+ioc_types = {t.name: t for t in IndicatorTypes.all_types}
 
 
 # TODO:
@@ -172,4 +162,6 @@ if __name__ == "__main__":
     # username = "ALIENVAULT"
     username = "CYBERHUNTERAUTOFEED"
     # username = "METADEFENDER"
+
+    types = IndicatorTypes.all_types
     
